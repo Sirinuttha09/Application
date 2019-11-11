@@ -1,0 +1,193 @@
+﻿package your;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import java.awt.Font;
+import java.awt.Color;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import javax.swing.border.LineBorder;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JTextArea;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
+
+public class Ceramic {
+	public static int x=0;
+	class Order{
+		public String Order;
+		public int number=0;
+		public int index;
+		Order(String Order,int number){
+			this.Order = Order;
+			this.number = number;
+			this.index = x++;
+		}
+	}
+	public static int total=0;
+    public static Order[] Order_list = new Order[100];
+	public static int Order_num = 0;
+	
+	private JFrame frmCeramic;
+	private JTextField textField_getOrder;
+	private JTextField textFieldtotal;
+	private JLabel lblcheckMenu;
+	private JLabel labelcheckNumber;
+	private JTextArea ShowOrderAll;
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Ceramic window = new Ceramic();
+					window.frmCeramic.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public Ceramic() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frmCeramic = new JFrame();
+		frmCeramic.setResizable(false);
+		frmCeramic.setTitle("Ceramic");
+		frmCeramic.setBounds(100, 100, 595, 550);
+		frmCeramic.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmCeramic.getContentPane().setLayout(null);
+		
+		JPanel panelinputOrder = new JPanel();
+		panelinputOrder.setBounds(10, 11, 569, 139);
+		frmCeramic.getContentPane().add(panelinputOrder);
+		panelinputOrder.setLayout(null);
+		
+		JLabel lblChioseMenu = new JLabel("+Cermic tpye");
+		lblChioseMenu.setForeground(new Color(0, 0, 0));
+		lblChioseMenu.setFont(new Font("Tahoma", Font.BOLD, 22));
+		lblChioseMenu.setBounds(109, 23, 200, 35);
+		panelinputOrder.add(lblChioseMenu);
+		
+		JComboBox comboBoxChiosMemu = new JComboBox();
+		comboBoxChiosMemu.setFont(new Font("Tahoma", Font.ITALIC, 11));
+		comboBoxChiosMemu.setModel(new DefaultComboBoxModel(new String[] {"เลื่อกสินค้า", "Porcelain", "Bone China", "Eartheware", "Stonware", "Torra Cotta", "Glass", "Pefractories"}));
+		comboBoxChiosMemu.setBounds(291, 23, 173, 33);
+		panelinputOrder.add(comboBoxChiosMemu);
+		
+		JLabel label_order = new JLabel("ระบุจำนวนสินค้า (ใบ)");
+		label_order.setFont(new Font("Angsana New", Font.ITALIC, 16));
+		label_order.setBounds(149, 69, 120, 26);
+		panelinputOrder.add(label_order);
+		
+		textField_getOrder = new JTextField();
+		textField_getOrder.setBounds(301, 72, 96, 20);
+		panelinputOrder.add(textField_getOrder);
+		textField_getOrder.setColumns(10);
+		
+		JButton buttEnter = new JButton("เพื่มสินค้าลงตะกร้า");
+		buttEnter.setFont(new Font("Angsana New", Font.ITALIC, 15));
+		buttEnter.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(comboBoxChiosMemu.getSelectedItem()=="เลื่อกสินค้า"){
+					lblcheckMenu.setText("X");
+				}
+				else if(textField_getOrder.getText().length()==0 ||Integer.valueOf(textField_getOrder.getText())<0) {
+					labelcheckNumber.setText("X");
+				}
+				else {
+					lblcheckMenu.setText("");
+					labelcheckNumber.setText("");
+					int i = Order_num++;
+					String order_name =comboBoxChiosMemu.getSelectedItem().toString();
+					int number =Integer.valueOf(textField_getOrder.getText());
+					Order_list[i] = new Order(order_name,number);
+					//set tatal
+					total += 65 * number;
+					textFieldtotal.setText(String.valueOf(total));
+					setList_order();
+					textField_getOrder.setText("");
+					comboBoxChiosMemu.setModel(new DefaultComboBoxModel(new String[] {"เลื่อกสินค้า", "Porcelain", "Bone China", "Eartheware", "Stonware", "Torra Cotta", "Glass", "Pefractories"}));					
+					
+				}
+			}
+		});
+		buttEnter.setBounds(236, 106, 112, 23);
+		panelinputOrder.add(buttEnter);
+		
+		lblcheckMenu = new JLabel();
+		lblcheckMenu.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblcheckMenu.setForeground(new Color(255, 69, 0));
+		lblcheckMenu.setBounds(474, 23, 20, 35);
+		panelinputOrder.add(lblcheckMenu);
+		
+		labelcheckNumber = new JLabel("");
+		labelcheckNumber.setForeground(new Color(255, 69, 0));
+		labelcheckNumber.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		labelcheckNumber.setBounds(407, 67, 20, 35);
+		panelinputOrder.add(labelcheckNumber);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 161, 569, 237);
+		frmCeramic.getContentPane().add(scrollPane);
+		
+		ShowOrderAll = new JTextArea();
+		scrollPane.setViewportView(ShowOrderAll);
+		ShowOrderAll.setFont(new Font("Angsana New", Font.PLAIN, 16));
+		ShowOrderAll.setEditable(false);
+		setList_order();
+		
+		// button
+		JPanel paneltotal = new JPanel();
+		paneltotal.setBounds(10, 409, 569, 47);
+		frmCeramic.getContentPane().add(paneltotal);
+		paneltotal.setLayout(null);
+		
+		textFieldtotal = new JTextField();
+		textFieldtotal.setText(String.valueOf(total));
+		textFieldtotal.setEditable(false);
+		textFieldtotal.setBounds(408, 11, 151, 25);
+		paneltotal.add(textFieldtotal);
+		textFieldtotal.setColumns(10);
+		
+		JLabel label = new JLabel("ยอดรวม (บาท) :");
+		label.setFont(new Font("Tahoma", Font.ITALIC, 13));
+		label.setBounds(276, 11, 122, 25);
+		paneltotal.add(label);
+		
+		JButton btnNext = new JButton("Next");
+		btnNext.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			    frmCeramic.dispose();
+			    Caramic2 con = new Caramic2();
+			    con.frame.setVisible(true);
+			}
+		});
+		btnNext.setBounds(472, 467, 89, 23);
+		frmCeramic.getContentPane().add(btnNext);
+		
+	}
+	public void setList_order() {
+		String Display = "";
+		for(int i=0;i<Order_num;i++) {
+			Display+="รายการที่ "+String.valueOf(i+1)+"   "+Order_list[i].Order+"      จำนวน : "+String.valueOf(Order_list[i].number)+"         ราคาทั้งหมด :"+65*Order_list[i].number+"\n";
+		}
+		ShowOrderAll.setText(Display);
+	}
+}
