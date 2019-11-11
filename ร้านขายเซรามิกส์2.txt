@@ -1,0 +1,27 @@
+//คลาสที่2
+import java.util.Scanner;
+
+public class CeramicType {
+    private String menutype;
+    private String menulist;
+    private double price;
+
+    public CeramicType(String menutype,String menulist,int price) {
+        this.menutype = menutype;
+        this.menulist = menulist;
+        this.price = price;
+    }
+    public String getMenuType(){
+        return menutype;
+    }
+    public String getMenuList(){
+        return menulist;
+    }
+    public double getPrice (){
+        return price;
+    }
+    public String toString (){
+        return "ชนิดเซรามิกส์ "+menutype+ "รายการ   "+menulist +"ราคา   "+price;
+    }
+
+}

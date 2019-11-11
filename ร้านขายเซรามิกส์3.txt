@@ -1,0 +1,24 @@
+//คลาสที่ 3
+import java.util.Scanner;
+    public class Detail {
+    private int orderID;
+    private String date;
+    private String time;
+    public Detail(int orderID,String date,String time) {
+        this.orderID = orderID;
+        this.date = date;
+        this.time = time;
+    }
+
+    public void Detail(){
+        Scanner scan = new Scanner(System.in);
+    }
+
+    public int getOrderID() {
+        return orderID;
+    }
+
+    public String toString(){
+        return "เลขที่ "+orderID +"\n \nวันที่/เวลา  \t \t " +date +".. \t " +time;
+    }
+}

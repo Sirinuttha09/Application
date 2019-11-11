@@ -1,0 +1,56 @@
+import java.util.Scanner;
+import java.util.Vector;
+
+public class Order {
+    private double total;
+    private String list;
+    private int orderNumber;
+    private Vector<CeramicType> ceramictype = new Vector<CeramicType>();
+
+    public String getList() {
+    return list;
+
+    }
+    public int getOrderNumber() {
+
+        return orderNumber;
+    }
+    public void addCeramicType(CeramicType f) {
+        ceramictype.addElement(f);
+
+    }
+
+    public void listCeramicType() {
+        for (int i = 0; i < type.size(); i++) {
+            System.out.println("ชนิดเซรามิกส์  "
+                + ceramictype.elementAt(i).getMenuType() + " \t รายการ   "
+                + ceramictype.elementAt(i).getMenuList() + " \t ราคา  "
+                + ceramictype.elementAt(i).getPrice());
+            }
+
+        }
+ // รับค่าจากผู้ใช้
+public void orderlist() {
+    Scanner scan = new Scanner(System.in);
+    int number;
+    System.out.print("ต้องการกี่รายการ ? = ");
+    number = scan.nextInt();
+    for (int i = 0; i < number; i++) {
+        System.out.print("รายการที่ " + (i + 1) + " ");
+        list = scan.next();
+        System.out.print("จำนวน ");
+        orderNumber = scan.nextInt();
+        }
+    }
+    // แสดงรายการที่สั่ง
+    public void calorderlist() {
+        for (int i = 0; i < ceramictype.size(); i++) {
+            if (ceramictype.elementAt(i).getMenuList().equals(list)) {
+                System.out.println("" + ceramictype.elementAt(i).getMenuList()
+                    + " \t \t " + orderNumber + " \t \t "
+                    + ceramictype.elementAt(i).getPrice() + " \t \t "
+                    + orderNumber * ceramictype.elementAt(i).getPrice());
+                }
+            }
+        }
+    }
